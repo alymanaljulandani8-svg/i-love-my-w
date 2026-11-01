@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بين الجمعة والجمعة... أشتاق إليكِ يا ولاء ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo & Amiri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for Easter Eggs -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: {
+                            900: '#1a0b12',
+                            800: '#2d1220',
+                            700: '#4a1935',
+                            600: '#6b1d48'
+                        },
+                        rosegold: '#d4af37',
+                        softpink: '#fce7f3',
+                        blush: '#f472b6',
+                        roseaccent: '#e8b4b8'
+                    },
+                    fontFamily: {
+                        amiri: ['Amiri', 'serif'],
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a0b12 0%, #2d1220 50%, #1a0b12 100%);
+            color: #fff5f6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .font-serif-custom {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Dynamic Glassmorphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s ease;
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 12px 40px 0 rgba(232, 180, 184, 0.2);
+        }
+
+        /* Gold glow text */
+        .text-gold-glow {
+            color: #d4af37;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .text-rose-glow {
+            color: #f472b6;
+            text-shadow: 0 0 12px rgba(244, 114, 182, 0.4);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Particle Heart Background */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: rgba(232, 180, 184, 0.25);
+            animation: floatUp 12s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a0b12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6b1d48;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+
+        /* Pulsing button */
+        .pulse-gold {
+            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            animation: pulse-gold-anim 2s infinite;
+        }
+
+        @keyframes pulse-gold-anim {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-roseaccent selection:text-burgundy-900">
+
+    <!-- Floating Background Hearts -->
+    <div id="hearts-container"></div>
+
+    <!-- Audio Player Controls -->
+    <div class="fixed top-5 left-5 z-50 flex items-center gap-3">
+        <button id="musicToggle" class="glass-card p-3.5 rounded-full text-rosegold hover:text-white transition duration-300 shadow-lg flex items-center gap-2 group border border-rosegold/30" title="تشغيل الموسيقى الرومانسية">
+            <i id="musicIcon" class="fas fa-music text-lg group-hover:scale-110 transition duration-300"></i>
+            <span id="musicText" class="text-xs font-semibold hidden md:inline px-1">عزف بيانو هادئ</span>
+        </button>
+    </div>
+
+    <!-- Quick Navigation Bar -->
+    <nav class="fixed top-5 right-5 z-50 hidden lg:block">
+        <div class="glass-card rounded-full px-6 py-3 border border-rosegold/20 flex gap-6 text-sm">
+            <a href="#hero" class="hover:text-rosegold transition">الرئيسية</a>
+            <a href="#countdown" class="hover:text-rosegold transition">عداد الجمعة</a>
+            <a href="#missing" class="hover:text-rosegold transition">اشتقت إليكِ</a>
+            <a href="#hug" class="hover:text-rosegold transition">حضنٌ أتمناه</a>
+            <a href="#forehead" class="hover:text-rosegold transition">قبلة على جبينكِ</a>
+            <a href="#wishes" class="hover:text-rosegold transition">ألف أمنية</a>
+            <a href="#letter" class="hover:text-rosegold transition">رسالة لا تنتهي</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 py-8 space-y-24">
+
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="min-h-[90vh] flex flex-col justify-center items-center text-center pt-10">
+            <!-- Decorative Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-rosegold/40 text-rosegold text-sm mb-6 animate-pulse">
+                <i class="fas fa-heart text-xs"></i>
+                <span>موقع خاص وحصري لحبيبتي ولاء</span>
+                <i class="fas fa-heart text-xs"></i>
+            </div>
+
+            <!-- Main Title -->
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold font-serif-custom text-gold-glow leading-relaxed md:leading-tight mb-8">
+                «بين الجمعة والجمعة... أشتاق إليكِ يا <span class="walaa-clickable cursor-pointer underline decoration-rosegold/50 hover:text-blush transition" title="انقري هنا لمفاجأة!">ولاء</span> ❤️»
+            </h1>
+
+            <!-- Hero Message Box -->
+            <div class="glass-card p-6 md:p-10 rounded-3xl max-w-3xl border border-rosegold/30 relative overflow-hidden shadow-2xl animate-float">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-rosegold/10 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blush/10 rounded-full blur-2xl"></div>
+                
+                <i class="fas fa-quote-right text-3xl md:text-4xl text-rosegold/40 mb-4 block"></i>
+                
+                <p class="text-lg md:text-2xl font-serif-custom text-softpink leading-loose md:leading-loose font-medium">
+                    «يا <span class="walaa-clickable cursor-pointer text-rosegold font-bold" title="ولاء قلبي">ولاء</span>، ما بين جمعةٍ وأخرى، أعيش على أمل لقائكِ. أشتاق إلى حضنكِ، وإلى قبلةٍ على جبينكِ، وإلى لحظةٍ أكون فيها بقربكِ دون أن أضطر إلى الرحيل. ليت المسافات تختصر نفسها، وليت كل أيام الأسبوع تصبح جمعة، لأراكِ وأطمئن بقربكِ. أحبكِ، وأشتاق إليكِ أكثر مما تستطيع الكلمات وصفه». ❤️
+                </p>
+
+                <div class="mt-6 flex justify-end">
+                    <i class="fas fa-quote-left text-3xl md:text-4xl text-rosegold/40"></i>
+                </div>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="#countdown" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-rosegold to-yellow-600 text-burgundy-900 font-bold hover:brightness-110 transition shadow-lg pulse-gold flex items-center gap-2">
+                    <i class="fas fa-clock"></i>
+                    <span>كم متبقي حتى نلتقي؟</span>
+                </a>
+                <a href="#if-beside-me" class="px-8 py-3.5 rounded-full glass-card hover:bg-white/10 text-white font-semibold transition border border-rosegold/30 flex items-center gap-2">
+                    <i class="fas fa-sparkles text-rosegold"></i>
+                    <span>لو كنتِ بجانبي الآن</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. COUNTDOWN SECTION -->
+        <section id="countdown" class="scroll-mt-20">
+            <div class="glass-card rounded-3xl p-8 md:p-12 text-center relative border border-rosegold/30">
+                <div class="inline-block p-3 rounded-full bg-burgundy-700/50 mb-4 text-rosegold">
+                    <i class="fas fa-hourglass-half text-2xl"></i>
+                </div>
+                <h2 class="text-2xl md:text-4xl font-bold font-serif-custom text-gold-glow mb-2">عدّاد الجمعة المباركة</h2>
+                <p class="text-rosegold/80 text-sm md:text-base mb-8">نعد الثواني والدقائق حتى ألقاكِ يا <span class="walaa-clickable underline">ولاء</span> وتشرق أيامي من جديد</p>
+
+                <!-- Timer Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
+                    <div class="glass-card p-4 rounded-2xl border border-rosegold/20">
+                        <span id="days" class="block text-3xl md:text-5xl font-extrabold text-white font-serif-custom">00</span>
+                        <span class="text-xs md:text-sm text-rosegold mt-1 block">يوم</span>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl border border-rosegold/20">
+                        <span id="hours" class="block text-3xl md:text-5xl font-extrabold text-white font-serif-custom">00</span>
+                        <span class="text-xs md:text-sm text-rosegold mt-1 block">ساعة</span>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl border border-rosegold/20">
+                        <span id="minutes" class="block text-3xl md:text-5xl font-extrabold text-white font-serif-custom">00</span>
+                        <span class="text-xs md:text-sm text-rosegold mt-1 block">دقيقة</span>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl border border-rosegold/20">
+                        <span id="seconds" class="block text-3xl md:text-5xl font-extrabold text-white font-serif-custom">00</span>
+                        <span class="text-xs md:text-sm text-rosegold mt-1 block">ثانية</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Message based on proximity -->
+                <div id="countdownMsg" class="glass-card p-4 rounded-xl border border-blush/30 max-w-xl mx-auto text-blush font-medium text-sm md:text-base animate-pulse">
+                    جاري حساب الوقت المتبقي لرؤية عينيكِ الجميلتين...
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MISSING YOU SECTION -->
+        <section id="missing" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold font-serif-custom text-gold-glow mb-3">اشتقت إليكِ يا كل كلي</h2>
+                <p class="text-roseaccent text-sm md:text-base">الأيام التي لا أراكِ فيها تمر بطيئة ثقيلة، كأن الوقت يتوقف في غيابكِ</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border border-rosegold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="text-rosegold text-2xl mb-4"><i class="fas fa-feather-alt"></i></div>
+                        <h3 class="text-xl font-bold font-serif-custom text-white mb-3">بطء الأيام في غيابكِ</h3>
+                        <p class="text-softpink/90 leading-relaxed text-sm">
+                            من السبت إلى الخميس، أراقب عقارب الساعة وهي تمشي ببطء شديد. كل يوم يمر دون أن ألمح ابتسامتكِ يبدو وكأنه دهر كامل. اشتياقي لكِ يا ولاء ليس مجرد كلمة، بل هو غصة حنين دافئة ترافقت مع كل نفس أتنفسه.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 text-xs text-rosegold flex justify-between items-center">
+                        <span>نبض قلبي</span>
+                        <i class="fas fa-heart text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border border-rosegold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="text-rosegold text-2xl mb-4"><i class="fas fa-moon"></i></div>
+                        <h3 class="text-xl font-bold font-serif-custom text-white mb-3">طيفكِ الذي لا يفارقني</h3>
+                        <p class="text-softpink/90 leading-relaxed text-sm">
+                            أغمض عيني في زحمة يومي، فأجد صورتكِ مطبوعة في مخيلتي. أتذكر نبرة صوتكِ، وضحكتكِ التي ترد فيّ الروح. غيابكِ يجلعني أدرك كم أنكِ أصبحتِ الجزء الأكبر والأهم في تفاصيل حياتي.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 text-xs text-rosegold flex justify-between items-center">
+                        <span>أشتاق إليكِ جداً</span>
+                        <i class="fas fa-heart text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border border-rosegold/20 flex flex-col justify-between">
+                    <div>
+                        <div class="text-rosegold text-2xl mb-4"><i class="fas fa-sun"></i></div>
+                        <h3 class="text-xl font-bold font-serif-custom text-white mb-3">إشراقة يوم الجمعة</h3>
+                        <p class="text-softpink/90 leading-relaxed text-sm">
+                            يوم الجمعة بالنسبة لي ليس مجرد يوم في الأسبوع، بل هو العيد الذي أنتظره بشغف. هو اليوم الذي تعود فيه الحياة لرئتيّ عندما التقيكِ، وترسو سفينة أشواقي في ميناء عينيكِ.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 text-xs text-rosegold flex justify-between items-center">
+                        <span>موعدنا القريب</span>
+                        <i class="fas fa-heart text-xs"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. A HUG I LONG FOR -->
+        <section id="hug" class="scroll-mt-20">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border border-rosegold/30 relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blush/10 text-blush text-xs font-semibold">
+                            <i class="fas fa-hands-holding"></i>
+                            <span>دفء وأمان</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold font-serif-custom text-gold-glow leading-snug">حضنٌ أتمناه... ويغنيني عن العالم</h2>
+                        <p class="text-softpink leading-loose text-base md:text-lg">
+                            كم أتمنى في هذه اللحظة بالذات أن أطوقكِ بين ذراعيّ، أن أضع رأسي بقرب رأسكِ وأستمع إلى هدوء أنفاسكِ. في حضنكِ يا ولاء، يزول كل تعب هذا العالم، وتتلاشى كل الهموم والمخاوف.
+                        </p>
+                        <p class="text-softpink leading-loose text-base md:text-lg">
+                            حضنكِ ليس مجرد عناق، بل هو وطني الدافيء، والمكان الوحيد الذي أشعر فيه بأني في مأمن تام. قربكِ يكفيني، ولا أريد من هذه الدنيا سوى أن أكون بجانبكِ، أحميكِ وأحتويكِ بكل ما أوتيت من حنان.
+                        </p>
+                        <div class="pt-2">
+                            <button onclick="triggerHugEffect(event)" class="px-6 py-3 rounded-full bg-burgundy-700 hover:bg-burgundy-600 border border-rosegold/40 text-rosegold text-sm font-semibold transition flex items-center gap-2">
+                                <i class="fas fa-heart-pulse"></i>
+                                <span>أرسلي لي عناقاً دافئاً الآن</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full border-2 border-dashed border-rosegold/40 flex items-center justify-center p-4 relative animate-float">
+                            <div class="w-full h-full rounded-full glass-card flex flex-col items-center justify-center text-center p-6 border border-rosegold/50 shadow-inner">
+                                <i class="fas fa-heart text-5xl text-blush mb-4 animate-pulse"></i>
+                                <span class="font-serif-custom text-xl text-rosegold font-bold">بين ذراعيكِ</span>
+                                <span class="text-xs text-softpink/70 mt-2">ينتهي الشتات ويترسخ الأمان</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. A KISS ON YOUR FOREHEAD -->
+        <section id="forehead" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold font-serif-custom text-gold-glow mb-3">قبلةٌ على جبينكِ العاطر</h2>
+                <p class="text-roseaccent text-sm md:text-base">عنوان المودة والاحترام والتقدير العميق</p>
+            </div>
+
+            <div class="glass-card p-8 md:p-10 rounded-3xl border border-rosegold/30 max-w-4xl mx-auto relative">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-rosegold">
+                            <i class="fas fa-crown text-xl"></i>
+                            <h3 class="text-xl font-bold font-serif-custom">قبلة احترام ووفاء</h3>
+                        </div>
+                        <p class="text-softpink text-sm md:text-base leading-relaxed">
+                            أريد أن طبع قبلةً رقيقة على جبينكِ، أستشعر فيها مكانتكِ العالية في قلبي. قبلة تعبر عن مدى احترامي لكِ، وعن امتناني لوجودكِ في حياتي، وعن التعهّد الصادق بأن أكون لكِ السند والظهر الدائم.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-rosegold">
+                            <i class="fas fa-hand-holding-heart text-xl"></i>
+                            <h3 class="text-xl font-bold font-serif-custom">قبلة على يديكِ الرقيقتين</h3>
+                        </div>
+                        <p class="text-softpink text-sm md:text-base leading-relaxed">
+                            وأن أتمسك بيدكِ الصغيرتين، وأقبلهما بدفء وحنان. يدكِ التي تمنحني القوة وتزرع السكينة في روحي. أتطلع لليوم الذي لا نضر فيه للوداع أو الفراق أبداً.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Hidden Secret Clickable -->
+                <div class="mt-8 pt-6 border-t border-white/10 text-center">
+                    <button id="foreheadSecretBtn" class="text-xs text-rosegold/70 hover:text-rosegold underline transition">
+                        <i class="fas fa-sparkles ml-1"></i> انقري هنا لرسالة سرية خاصة جداً
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. IF YOU WERE BESIDE ME NOW -->
+        <section id="if-beside-me" class="scroll-mt-20">
+            <div class="glass-card p-8 md:p-12 rounded-3xl border border-rosegold/30 text-center max-w-3xl mx-auto">
+                <div class="inline-block p-3 rounded-full bg-blush/10 text-blush mb-4">
+                    <i class="fas fa-wand-magic-sparkles text-2xl"></i>
+                </div>
+                <h2 class="text-2xl md:text-4xl font-bold font-serif-custom text-gold-glow mb-4">لو كنتِ بجانبي الآن...</h2>
+                <p class="text-roseaccent text-sm mb-8">اضغطي على الزر لتكتشفي ماذا كنتُ سأفعل لو أنكِ هنا معي الآن</p>
+
+                <!-- Random Message Display Box -->
+                <div class="min-h-[140px] flex items-center justify-center p-6 rounded-2xl bg-burgundy-900/60 border border-rosegold/20 mb-8">
+                    <p id="randomWhisper" class="text-lg md:text-2xl font-serif-custom text-softpink leading-relaxed transition-all duration-500">
+                        «لو كنتِ بجانبي الآن، لاحتضنتكِ طويلًا دون أن أقول كلمة واحدة... يكفي أن أنصت لدقات قلبكِ.»
+                    </p>
+                </div>
+
+                <button id="nextWhisperBtn" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-rosegold to-yellow-600 text-burgundy-900 font-bold hover:brightness-110 transition shadow-lg flex items-center gap-2 mx-auto">
+                    <i class="fas fa-dice text-sm"></i>
+                    <span>همسة أخرى لو كنتِ معي</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 7. A THOUSAND WISHES WITH YOU -->
+        <section id="wishes" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold font-serif-custom text-gold-glow mb-3">ألف أمنية معكِ يا ولاء</h2>
+                <p class="text-roseaccent text-sm md:text-base">أحلام بسيطة وصادقة أتمنى أن نعيشها معاً يوماً بعد يوم</p>
+            </div>
+
+            <div class="glass-card p-8 md:p-12 rounded-3xl border border-rosegold/30 text-center max-w-3xl mx-auto">
+                <div class="w-16 h-16 mx-auto rounded-full bg-rosegold/10 border border-rosegold/40 flex items-center justify-center text-rosegold text-2xl mb-6">
+                    <i class="fas fa-star animate-spin-slow"></i>
+                </div>
+
+                <!-- Wish Display -->
+                <div class="min-h-[120px] flex items-center justify-center p-4">
+                    <h3 id="wishText" class="text-xl md:text-3xl font-serif-custom text-softpink font-bold leading-relaxed">
+                        «أن نمشي معاً تحت المطر الهادئ وتكون يدكِ دافئة في يدي»
+                    </h3>
+                </div>
+
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <button id="nextWishBtn" class="px-8 py-3.5 rounded-full bg-blush text-burgundy-900 font-bold hover:bg-pink-300 transition shadow-lg flex items-center gap-2">
+                        <i class="fas fa-magic"></i>
+                        <span>امسحي الفانوس لأمنية جديدة</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. THE ENDLESS LETTER -->
+        <section id="letter" class="scroll-mt-20">
+            <div class="glass-card p-8 md:p-14 rounded-3xl border border-rosegold/30 relative">
+                <div class="absolute top-6 left-6 text-rosegold/20 text-6xl font-serif-custom">❤️</div>
+                
+                <div class="text-center mb-8">
+                    <span class="text-rosegold text-xs tracking-widest uppercase font-semibold">رسالة من أعماق الروح</span>
+                    <h2 class="text-3xl md:text-4xl font-bold font-serif-custom text-gold-glow mt-1">رسالة لا تنتهي... إليكِ وحدكِ</h2>
+                </div>
+
+                <div class="space-y-6 text-softpink font-serif-custom text-lg md:text-xl leading-loose md:leading-loose text-justify">
+                    <p>
+                        حبيبتي الغالية <span class="walaa-clickable font-bold text-rosegold underline cursor-pointer">ولاء</span>،
+                    </p>
+                    <p>
+                        أكتب لكِ هذه الكلمات وأنا أعلم أن حروف اللغة كلها تقف عاجزة عن وصف ما يحمله قلبي لكِ. قد تفصلنا الأيام، وقد نشغل بالعديد من الأمور، وقد تمضي الساعات دون أن نستطيع الحديث طويلًا، ولكنني أريدكِ أن تتأكدي دائماً وأبداً من شيء واحد: أنكِ في قلبي وفي فكري في كل لحظة.
+                    </p>
+                    <p>
+                        لا أريد من هذه الدنيا شيئاً سوى أن أراكِ سعيدة، مطمئنة، ومبتسمة. ابتسامتكِ هي نوري في أحلك الأيام، ورؤيتكِ بخير هي كل ما أتمناه. حتى في الأيام التي أكون فيها صامتاً أو مشغولاً، أشتاق إليكِ بنفس القدر والعمق.
+                    </p>
+                    <p>
+                        أنتظر يوم الجمعة بكل شغف، لا لشيء إلا لأنه اليوم الذي يعيد ترتيب قلبي، اليوم الذي أستطيع فيه التأمل في عينيكِ والجلوس بقربكِ. وأدعو الله دوماً أن يجمعنا قريباً على خير ودائم، بأيام لا فراق فيها ولا انتظار.
+                    </p>
+                    <p class="text-left font-bold text-rosegold pt-4">
+                        ـ محبكِ ومشتاقكِ الدائم ❤️
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center pt-8 pb-12 text-rosegold/60 text-xs border-t border-white/10 space-y-2">
+            <p>صُنِعَ بشغف وحب كبيرين لأجل **ولاء** ❤️</p>
+            <p>بين الجمعة والجمعة... نبضٌ لا يهدأ وشوقٌ لا ينتهي</p>
+        </footer>
+
+    </main>
+
+    <!-- SECRET MODAL (Easter Egg) -->
+    <div id="secretModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-rosegold text-center relative animate-float">
+            <button id="closeModalBtn" class="absolute top-4 left-4 text-rosegold/70 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-16 h-16 bg-blush/20 text-blush rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <h3 class="text-2xl font-serif-custom text-rosegold font-bold mb-3">سر صغير لـ ولاء ❤️</h3>
+            <p class="text-softpink leading-relaxed font-serif-custom text-lg mb-6">
+                «هل تعلمين يا ولاء؟ حتى عندما لا أتحدث، فإن اسمكِ هو الدعاء الأول الذي يلهج به لساني في كل صلاة. أنتِ أجمل هدايا القدر لي.»
+            </p>
+            <button onclick="closeModal()" class="px-6 py-2.5 rounded-full bg-rosegold text-burgundy-900 font-bold hover:brightness-110 text-sm">
+                حفظكِ الله لي ❤️
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- 1. BACKGROUND FLOATING HEARTS ---
+        function createHeartParticle() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('i');
+            heart.classList.add('fas', 'fa-heart', 'heart-particle');
+            
+            // Random styling
+            const size = Math.random() * 16 + 10; // 10px to 26px
+            const left = Math.random() * 100; // 0% to 100%
+            const duration = Math.random() * 8 + 8; // 8s to 16s
+            const opacity = Math.random() * 0.4 + 0.1;
+
+            heart.style.left = left + 'vw';
+            heart.style.fontSize = size + 'px';
+            heart.style.animationDuration = duration + 's';
+            heart.style.opacity = opacity;
+
+            container.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createHeartParticle, 600);
+
+        // --- 2. FRIDAY COUNTDOWN LOGIC ---
+        function updateCountdown() {
+            const now = new Date();
+            let target = new Date();
+            
+            // Calculate next Friday at 10:00 AM
+            const dayOfWeek = now.getDay(); // 0: Sun, 1: Mon, ..., 5: Fri, 6: Sat
+            let daysUntilFriday = (5 - dayOfWeek + 7) % 7;
+            
+            // If today is Friday but past 10:00 AM, target next Friday
+            if (dayOfWeek === 5 && now.getHours() >= 10) {
+                daysUntilFriday = 7;
+            }
+
+            target.setDate(now.getDate() + daysUntilFriday);
+            target.setHours(10, 0, 0, 0);
+
+            const diff = target - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+            // Dynamic Message
+            const msgEl = document.getElementById('countdownMsg');
+            if (days === 0 && hours < 5) {
+                msgEl.innerText = "ساعات قليلة تفصلني عن رؤيتكِ يا ولاء! نبضات قلبي تتسارع بشوق! ❤️";
+            } else if (days === 0) {
+                msgEl.innerText = "اليوم هو الجمعة! اقترب الموعد الدافئ لرؤية عينيكِ 😍";
+            } else if (days <= 2) {
+                msgEl.innerText = "اقتربت الجمعة جداً، والشوق في قلبي يزداد اتساعاً! ✨";
+            } else {
+                msgEl.innerText = "ما زال الطريق بضعة أيام، لكن طيفكِ الجميل يؤنس كل لحظاتي ❤️";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- 3. IF YOU WERE BESIDE ME RANDOM GENERATOR ---
+        const whispers = [
+            "لو كنتِ بجانبي الآن، لاحتضنتكِ طويلًا دون أن أقول كلمة واحدة... يكفي أن أنصت لدقات قلبكِ.",
+            "لو كنتِ أمامي الآن، لقلت لكِ كم أشتاق إليكِ وكيف تمضي الأيام باهتة بدون وجودكِ.",
+            "أريد لحظة هادئة تجمعني بكِ، أضع فيها رأسي بقربكِ دون أن يعكر صفونا شيء في هذا العالم.",
+            "لو كان الأمر بيدي، لجعلت كل أيام الأسبوع يوم الجمعة، لأكون بجواركِ دائماً وأبدًا.",
+            "لو كنتِ بجانبي الآن، لتأملتُ عيونكِ الطيبة وقلت لكِ: أنتِ أجمل ما حدث لي في حياتي.",
+            "لو كنتِ معي الآن، لنظرتُ إلى يديكِ الصغيرتين وأمسكتهما بدفء ولن أفلتهما أبداً."
+        ];
+
+        let currentWhisperIdx = 0;
+        document.getElementById('nextWhisperBtn').addEventListener('click', () => {
+            const whisperEl = document.getElementById('randomWhisper');
+            whisperEl.style.opacity = 0;
+            
+            setTimeout(() => {
+                currentWhisperIdx = (currentWhisperIdx + 1) % whispers.length;
+                whisperEl.innerText = `«${whispers[currentWhisperIdx]}»`;
+                whisperEl.style.opacity = 1;
+            }, 300);
+        });
+
+        // --- 4. A THOUSAND WISHES RANDOM GENERATOR ---
+        const wishes = [
+            "أن نمشي معاً تحت المطر الهادئ وتكون يدكِ دافئة في يدي.",
+            "أن نجلس متقاربين في مكان هادئ ونتبادل الأحاديث الطويلة دون ملل.",
+            "أن أستمع لضحكتكِ الصافية وهي تملأ المكان فرحاً وأملاً.",
+            "أن أصنع معكِ ذكريات جميلة نبتسم كلما تذكرناها في المستقبل.",
+            "أن أقبل جبينكِ العاطر وأقول لكِ: شكراً لأنكِ في حياتي.",
+            "أن نشرب القهوة معاً في صباح يوم جمعة مشرق وهادئ."
+        ];
+
+        let currentWishIdx = 0;
+        document.getElementById('nextWishBtn').addEventListener('click', () => {
+            const wishEl = document.getElementById('wishText');
+            wishEl.style.opacity = 0;
+            
+            // Trigger quick particle
+            confetti({
+                particleCount: 25,
+                spread: 50,
+                origin: { y: 0.7 },
+                colors: ['#d4af37', '#f472b6', '#fff5f6']
+            });
+
+            setTimeout(() => {
+                currentWishIdx = (currentWishIdx + 1) % wishes.length;
+                wishEl.innerText = `«${wishes[currentWishIdx]}»`;
+                wishEl.style.opacity = 1;
+            }, 300);
+        });
+
+        // --- 5. EASTER EGGS & INTERACTIONS ---
+        // Click on "Walaa" triggers confetti burst
+        document.querySelectorAll('.walaa-clickable').forEach(el => {
+            el.addEventListener('click', (e) => {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight },
+                    colors: ['#d4af37', '#f472b6', '#e8b4b8']
+                });
+            });
+        });
+
+        // Secret Forehead Modal
+        const modal = document.getElementById('secretModal');
+        document.getElementById('foreheadSecretBtn').addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Hug effect button
+        function triggerHugEffect(e) {
+            confetti({
+                particleCount: 60,
+                spread: 100,
+                origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight },
+                colors: ['#f472b6', '#ffffff']
+            });
+            alert("وصلت شحنة دافئة من العناق والحنان إلى قلب ولاء ❤️");
+        }
+
+        // Custom non-intrusive message box instead of default alert
+        window.alert = function(msg) {
+            const alertBox = document.createElement('div');
+            alertBox.className = 'fixed bottom-10 right-10 z-50 glass-card p-4 rounded-2xl border border-rosegold text-softpink shadow-2xl flex items-center gap-3 animate-float';
+            alertBox.innerHTML = `<i class="fas fa-heart text-blush text-xl"></i><span>${msg}</span>`;
+            document.body.appendChild(alertBox);
+            setTimeout(() => alertBox.remove(), 4000);
+        };
+
+        // --- 6. SOFT ROMANTIC PIANO SYNTHESIZER (Web Audio API) ---
+        let audioCtx = null;
+        let isPlaying = false;
+        let timerId = null;
+
+        const musicBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicText = document.getElementById('musicText');
+
+        // Gentle romantic pentatonic notes in Hz (Soft Piano feeling)
+        const notes = [
+            261.63, // C4
+            293.66, // D4
+            329.63, // E4
+            392.00, // G4
+            440.00, // A4
+            523.25, // C5
+            587.33, // D5
+            659.25  // E5
+        ];
+
+        function playSoftNote() {
+            if (!audioCtx || !isPlaying) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            // Random soft note selection
+            const freq = notes[Math.floor(Math.random() * notes.length)];
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            // Envelope for romantic soft piano feel
+            gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.5);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 2.6);
+        }
+
+        function toggleMusic() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (isPlaying) {
+                isPlaying = false;
+                clearInterval(timerId);
+                musicIcon.className = "fas fa-music text-lg";
+                musicText.innerText = "عزف بيانو هادئ";
+            } else {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                isPlaying = true;
+                musicIcon.className = "fas fa-pause text-lg text-blush animate-pulse";
+                musicText.innerText = "إيقاف الموسيقى";
+                
+                // Play first note immediately and set interval
+                playSoftNote();
+                timerId = setInterval(playSoftNote, 1400);
+            }
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+    </script>
+</body>
+</html>
